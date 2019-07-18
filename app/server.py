@@ -9,8 +9,8 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
 from starlette.staticfiles import StaticFiles
 
-export_file_url = 'https://drive.google.com/uc?export=download&id=1-3iaDCCDbP5N8t3pLC_NreGJeczMSN2Y'
-export_file_name = 'export.pkl'
+export_file_url = 'https://drive.google.com/file/d/1nDjUBjQto8Bd4XIFcy1gp2yvGq66nKZn/view?usp=sharing'
+export_file_name = 'cassava_best_model.pkl'
 
 classes = ['cbb','cbsd','cgm','cmd','healthy']
 path = Path(__file__).parent
@@ -30,8 +30,12 @@ async def download_file(url, dest):
 
 
 async def setup_learner():
+    print('PATH IS: ', path)
+    print('EXPORT_FILE_URL is:, ', export_file_url)
     await download_file(export_file_url, path / export_file_name)
+    print(path)
     try:
+
         learn = load_learner(path, export_file_name)
         return learn
     except RuntimeError as e:
